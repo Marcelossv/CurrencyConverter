@@ -9,9 +9,15 @@ import UIKit
 
 class CurrencyViewController: UIViewController {
 
+    var currency: CurrencyView?
+    
+    override func loadView() {
+        self.currency = CurrencyView()
+        view = self.currency
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+       
     }
 
 

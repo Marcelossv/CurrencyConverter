@@ -21,7 +21,7 @@ class CurrencyView: UIView {
     lazy var labelApp: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .orange
+        label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 25)
         label.text = "Currency Convert"
         label.numberOfLines = 0
@@ -31,7 +31,7 @@ class CurrencyView: UIView {
     lazy var firstCurrencyView: UIView = {
         let firstView = UIView()
         firstView.translatesAutoresizingMaskIntoConstraints = false
-        firstView.backgroundColor = .cyan
+        firstView.backgroundColor = .white
         return firstView
     }()
 
@@ -40,13 +40,14 @@ class CurrencyView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "arrow.up.arrow.down.circle"), for:.normal )
         button.addTarget(self, action: #selector(self.tappedbuttonSwipe), for: .touchUpInside)
+        button.tintColor = .black
         return button
     }()
     
     lazy var secondCurrencyView: UIView = {
         let secondView = UIView()
         secondView.translatesAutoresizingMaskIntoConstraints = false
-        secondView.backgroundColor = .cyan
+        secondView.backgroundColor = .white
         return secondView
     }()
     
@@ -55,7 +56,7 @@ class CurrencyView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .orange
         label.font = UIFont.systemFont(ofSize: 25)
-        label.text = ""
+        label.text = "test"
         label.numberOfLines = 0
         return label
     }()
@@ -72,7 +73,7 @@ class CurrencyView: UIView {
     }
     
     private func configBackGround() {
-        self.backgroundColor = .systemIndigo
+        self.backgroundColor = #colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)
     }
     
     @objc private func tappedbuttonSwipe() {
@@ -99,19 +100,19 @@ class CurrencyView: UIView {
         self.firstCurrencyView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 20),
         self.firstCurrencyView.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -20),
         self.firstCurrencyView.heightAnchor.constraint(equalToConstant: 40),
-        
+//
         self.swipeButton.topAnchor.constraint(equalTo: self.firstCurrencyView.bottomAnchor, constant: 20),
         self.swipeButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
         self.swipeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -20),
         self.swipeButton.heightAnchor.constraint(equalToConstant: 20),
-        
+
         self.secondCurrencyView.topAnchor.constraint(equalTo: self.swipeButton.bottomAnchor, constant: 20),
         self.secondCurrencyView.leadingAnchor.constraint(equalTo: self.firstCurrencyView.leadingAnchor),
         self.secondCurrencyView.trailingAnchor.constraint(equalTo: self.firstCurrencyView.trailingAnchor),
         self.secondCurrencyView.heightAnchor.constraint(equalToConstant: 40),
-        
-        self.labelApp.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor,constant: 20),
-        self.labelApp.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+
+        self.labelResult.topAnchor.constraint(equalTo: self.secondCurrencyView.bottomAnchor,constant: 20),
+        self.labelResult.centerXAnchor.constraint(equalTo: self.centerXAnchor),
         
         
     
