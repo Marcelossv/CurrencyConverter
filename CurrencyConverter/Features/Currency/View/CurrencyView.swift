@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import DropDown
+
 protocol CurrencyViewProtocol : AnyObject {
     func tappedSwipeButtonAction()
 }
@@ -34,6 +36,14 @@ class CurrencyView: UIView {
         firstView.backgroundColor = .white
         return firstView
     }()
+    
+    let menu:DropDown = {
+        let menu = DropDown()
+        menu.dataSource = [
+            "🇦🇺AUD", "🇧🇷BRL", "🇨🇦CAD", "🇪🇺EUR", "🇬🇧GBP", "🇯🇵JPY", "🇺🇸USD"
+        ]
+        return menu
+    }()
 
     lazy var swipeButton: UIButton = {
         let button = UIButton()
@@ -50,6 +60,7 @@ class CurrencyView: UIView {
         secondView.backgroundColor = .white
         return secondView
     }()
+    
     
     lazy var labelResult: UILabel = {
         let label = UILabel()
@@ -83,8 +94,10 @@ class CurrencyView: UIView {
     private func addSubView() {
         self.addSubview(self.labelApp)
         self.addSubview(self.firstCurrencyView)
+        self.addSubview(self.menu)
         self.addSubview(self.swipeButton)
         self.addSubview(self.secondCurrencyView)
+        self.addSubview(self.menu2)
         self.addSubview(self.labelResult)
 }
     
@@ -100,11 +113,11 @@ class CurrencyView: UIView {
         self.firstCurrencyView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 20),
         self.firstCurrencyView.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -20),
         self.firstCurrencyView.heightAnchor.constraint(equalToConstant: 40),
-//
+        
         self.swipeButton.topAnchor.constraint(equalTo: self.firstCurrencyView.bottomAnchor, constant: 20),
         self.swipeButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
         self.swipeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -20),
-        self.swipeButton.heightAnchor.constraint(equalToConstant: 20),
+        self.swipeButton.heightAnchor.constraint(equalToConstant: 60),
 
         self.secondCurrencyView.topAnchor.constraint(equalTo: self.swipeButton.bottomAnchor, constant: 20),
         self.secondCurrencyView.leadingAnchor.constraint(equalTo: self.firstCurrencyView.leadingAnchor),
