@@ -23,8 +23,8 @@ class CurrencyView: UIView {
     lazy var labelApp: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 32)
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 40)
         label.text = "Currency Convert"
         label.numberOfLines = 0
         return label
@@ -51,7 +51,7 @@ class CurrencyView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "arrow.up.arrow.down.circle"), for:.normal )
         button.addTarget(self, action: #selector(self.tappedbuttonSwipe), for: .touchUpInside)
-        button.tintColor = .black
+        button.tintColor = .white
         return button
     }()
     
@@ -94,7 +94,7 @@ class CurrencyView: UIView {
     }
     
     private func configBackGround() {
-        self.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
+        self.backgroundColor = #colorLiteral(red: 0.1086915967, green: 0.1659173807, blue: 0.5, alpha: 1)
     }
     
     @objc private func tappedbuttonSwipe() {
@@ -107,7 +107,7 @@ class CurrencyView: UIView {
         self.addSubview(self.menu)
         self.addSubview(self.swipeButton)
         self.addSubview(self.secondCurrencyView)
-//        self.addSubview(self.menu2)
+        self.addSubview(self.menu2)
         self.addSubview(self.labelResult)
 }
     

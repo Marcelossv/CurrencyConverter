@@ -11,8 +11,6 @@ class CurrencyViewController: UIViewController {
 
     var currency: CurrencyView?
     
-    
-    
     override func loadView() {
         self.currency = CurrencyView()
         view = self.currency
@@ -23,7 +21,6 @@ class CurrencyViewController: UIViewController {
         self.secondViewShow()
     }
 
-  
 
     @objc func didTapMenu() {
         currency?.menu.show()
