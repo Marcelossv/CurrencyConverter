@@ -38,7 +38,7 @@ class CurrencyViewController: UIViewController {
         gesture.numberOfTapsRequired = 1
         gesture.numberOfTouchesRequired = 1
         currency?.firstCurrencyView.addGestureRecognizer(gesture)
-        
+    
         currency?.menu.anchorView = currency?.firstCurrencyView
     }
     
