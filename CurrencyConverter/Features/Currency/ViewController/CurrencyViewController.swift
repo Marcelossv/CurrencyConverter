@@ -19,12 +19,8 @@ class CurrencyViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapMenu))
-        gesture.numberOfTapsRequired = 1
-        gesture.numberOfTouchesRequired = 1
-        currency?.firstCurrencyView.addGestureRecognizer(gesture)
-        
-        currency?.menu.anchorView = currency?.firstCurrencyView
+        self.firstViewShow()
+        self.secondViewShow()
     }
 
   
@@ -33,6 +29,27 @@ class CurrencyViewController: UIViewController {
         currency?.menu.show()
     }
     
+    @objc func didTapMenu2() {
+        currency?.menu2.show()
+    }
+    
+    func firstViewShow() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapMenu))
+        gesture.numberOfTapsRequired = 1
+        gesture.numberOfTouchesRequired = 1
+        currency?.firstCurrencyView.addGestureRecognizer(gesture)
+        
+        currency?.menu.anchorView = currency?.firstCurrencyView
+    }
+    
+    func secondViewShow() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapMenu2))
+        gesture.numberOfTapsRequired = 1
+        gesture.numberOfTouchesRequired = 1
+        currency?.secondCurrencyView.addGestureRecognizer(gesture)
+        
+        currency?.menu2.anchorView = currency?.secondCurrencyView
+    }
 
 }
 
