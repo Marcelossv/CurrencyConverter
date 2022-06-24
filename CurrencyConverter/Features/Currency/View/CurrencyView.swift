@@ -24,7 +24,7 @@ class CurrencyView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 25)
+        label.font = UIFont.systemFont(ofSize: 32)
         label.text = "Currency Convert"
         label.numberOfLines = 0
         return label
@@ -39,6 +39,7 @@ class CurrencyView: UIView {
     
     let menu:DropDown = {
         let menu = DropDown()
+        menu.textFont = UIFont.systemFont(ofSize: 20)
         menu.dataSource = [
             "🇦🇺AUD", "🇧🇷BRL", "🇨🇦CAD", "🇪🇺EUR", "🇬🇧GBP", "🇯🇵JPY", "🇺🇸USD"
         ]
@@ -59,6 +60,15 @@ class CurrencyView: UIView {
         secondView.translatesAutoresizingMaskIntoConstraints = false
         secondView.backgroundColor = .white
         return secondView
+    }()
+    
+    let menu2:DropDown = {
+        let menu = DropDown()
+        menu.textFont = UIFont.systemFont(ofSize: 20)
+        menu.dataSource = [
+            "🇦🇺AUD", "🇧🇷BRL", "🇨🇦CAD", "🇪🇺EUR", "🇬🇧GBP", "🇯🇵JPY", "🇺🇸USD"
+        ]
+        return menu
     }()
     
     
@@ -84,7 +94,7 @@ class CurrencyView: UIView {
     }
     
     private func configBackGround() {
-        self.backgroundColor = #colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)
+        self.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
     }
     
     @objc private func tappedbuttonSwipe() {
@@ -97,7 +107,7 @@ class CurrencyView: UIView {
         self.addSubview(self.menu)
         self.addSubview(self.swipeButton)
         self.addSubview(self.secondCurrencyView)
-        self.addSubview(self.menu2)
+//        self.addSubview(self.menu2)
         self.addSubview(self.labelResult)
 }
     
@@ -106,10 +116,10 @@ class CurrencyView: UIView {
     
     NSLayoutConstraint.activate([
     
-        self.labelApp.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor,constant: 20),
+        self.labelApp.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor,constant: 10),
         self.labelApp.centerXAnchor.constraint(equalTo: self.centerXAnchor),
         
-        self.firstCurrencyView.topAnchor.constraint(equalTo: self.labelApp.bottomAnchor, constant: 20),
+        self.firstCurrencyView.topAnchor.constraint(equalTo: self.labelApp.bottomAnchor, constant: 50),
         self.firstCurrencyView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 20),
         self.firstCurrencyView.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -20),
         self.firstCurrencyView.heightAnchor.constraint(equalToConstant: 40),
