@@ -7,40 +7,65 @@
 
 import Foundation
 
-protocol ServiceDelegate: GenericService {
-    func getCurrency(completion: @escaping completion<Currency?>)
+protocol CurrencyManagerDelegate{
+    func didUpdateCurrency(currency:Currency)
+    func didFailWithError(error:Error)
 }
 
-class CurrencyService: ServiceDelegate {
-    func getCurrency(completion: @escaping completion<Currency?>) {
-        let urlString = "https://api.exchangerate.host/convert?from=USD&to=EUR&amount=1200"
-        
-        guard let url: URL = URL(string: urlString) else {
-            return completion(nil, Error.errorDescription(message: "Error Url"))
+protocol CurrencyServiceProtocol {
+    var delegate:CurrencyManagerDelegate? {get set}
+    func fetchCurrency(_ from:String, _ to:String, _ amount:Double)
+}
+
+enum Erro: Error {
+    case genericError (String)
+}
+
+class CurrencyService: CurrencyServiceProtocol {
+    var delegate: CurrencyManagerDelegate?
+    
+    let urlString = "https://api.exchangerate.host/convert?"
+    
+    func fetchCurrency(_ from:String, _ to:String, _ amount:Double) {
+
+        let url = "\(urlString)from=\(from)&to=\(to)&amount=\(amount)"
+        self.getCurrency(with: url)
+    }
+    
+    func getCurrency(with url:String) {
+       
+        guard let url: URL = URL(string: url) else {
+            delegate?.didFailWithError(error: Erro.genericError("error url"))
+            return
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
-        let task = URLSession.shared.dataTask(with: request) {data, response, error in
+        let task = URLSession.shared.dataTask(with: request) { [self]data, response, error in
             guard let data = data else {
-                return completion(nil, Error.errorDescription(message: "Error data"))
+                self.delegate?.didFailWithError(error: Erro.genericError("error data"))
+                return
             }
 
-            _ = try? JSONSerialization.jsonObject(with: data)
-            
+            let json = try? JSONSerialization.jsonObject(with: data)
+            print(json as Any)
             guard let response = response as? HTTPURLResponse else {
-                return completion(nil, Error.errorDescription(message: "Error data"))
+                self.delegate?.didFailWithError(error: Erro.genericError("error response"))
+                return
             }
             
             if response.statusCode == 200 {
                 do {
                     let model:Currency = try JSONDecoder().decode(Currency.self, from: data)
+                    delegate?.didUpdateCurrency(currency: model)
                 } catch {
-                    return completion(nil, Error.errorDescription(message: "Error parse", error: error))
+                    delegate?.didFailWithError(error: Erro.genericError("error parse"))
+                    return
                 }
             } else {
-                return completion(nil, Error.errorDescription(message: "Error", error: error))
+                delegate?.didFailWithError(error: Erro.genericError("error"))
+                return
             }
         }
         task.resume()
