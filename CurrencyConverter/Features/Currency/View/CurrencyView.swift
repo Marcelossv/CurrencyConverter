@@ -47,7 +47,7 @@ class CurrencyView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 20)
-        label.text = "                                                                   ▽"
+        label.text = "▽"
         
         label.numberOfLines = 0
         return label
@@ -104,7 +104,7 @@ class CurrencyView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 20)
-        label.text = "                                                                   ▽"
+        label.text = "▽"
         label.textAlignment = .natural
         label.numberOfLines = 0
         return label
