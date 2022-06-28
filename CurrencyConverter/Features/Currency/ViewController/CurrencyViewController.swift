@@ -23,6 +23,7 @@ class CurrencyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.currency?.delegate(delegate: self)
+        self.currency?.configtextFieldDelegateSignUp(delegate: self)
         self.firstViewShow()
         self.secondViewShow()
         self.setIndexFirstView()
@@ -116,7 +117,7 @@ extension CurrencyViewController : CurrencyViewProtocol {
 extension CurrencyViewController: CurrencyManagerDelegate {
     func didUpdateCurrency(currency: Currency) {
         DispatchQueue.main.async {
-            self.currency?.labelResult.text = String(format: "%.2f", currency.result)
+            self.currency?.labelResult.text = "\(String(format: "%.2f", currency.result)) \(self.secondTypeCurrency)"
         }
     }
     
@@ -126,7 +127,39 @@ extension CurrencyViewController: CurrencyManagerDelegate {
         }
     }
     
+}
+
+extension CurrencyViewController: UITextFieldDelegate {
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.layer.borderWidth = 2.0
+        textField.layer.borderColor = UIColor.orange.cgColor
+    }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.text?.count == 0 {
+            textField.layer.borderWidth = 2.0
+            textField.layer.borderColor = UIColor.red.cgColor
+            
+        }else{
+            textField.layer.borderWidth = 2.0
+            textField.layer.borderColor = UIColor.lightGray.cgColor
+        }
+        self.currency?.validateTextField()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.currency?.firstCurrencyTextField {
+            self.currency?.firstCurrencyTextField.becomeFirstResponder()
+        } else if textField == self.currency?.firstCurrencyTextField && ((self.currency?.firstCurrencyTextField) != nil){
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+        
+    }
     
 }
+
