@@ -14,7 +14,7 @@ protocol CurrencyManagerDelegate{
 
 protocol CurrencyServiceProtocol {
     var delegate:CurrencyManagerDelegate? {get set}
-    func fetchCurrency(_ from:String, _ to:String, _ amount:Double)
+    func fetchCurrency(_ from:String, _ to:String, _ amount:String)
 }
 
 enum Erro: Error {
@@ -26,7 +26,7 @@ class CurrencyService: CurrencyServiceProtocol {
     
     let urlString = "https://api.exchangerate.host/convert?"
     
-    func fetchCurrency(_ from:String, _ to:String, _ amount:Double) {
+    func fetchCurrency(_ from:String, _ to:String, _ amount:String) {
 
         let url = "\(urlString)from=\(from)&to=\(to)&amount=\(amount)"
         self.getCurrency(with: url)
@@ -71,6 +71,5 @@ class CurrencyService: CurrencyServiceProtocol {
         task.resume()
     }
     
-    
-    
 }
+

@@ -11,6 +11,10 @@ class CurrencyViewController: UIViewController {
 
     var currency: CurrencyView?
     let viewModel: CurrencyViewModel = CurrencyViewModel()
+    var service: CurrencyServiceProtocol?
+    var firstTypeCurrency: String = ""
+    var secondTypeCurrency: String = ""
+    
     
     override func loadView() {
         self.currency = CurrencyView()
@@ -23,8 +27,8 @@ class CurrencyViewController: UIViewController {
         self.secondViewShow()
         self.setIndexFirstView()
         self.setIndexSecondView()
-        
-
+        self.service = CurrencyService()
+        self.service?.delegate = self
     }
 
 
@@ -60,6 +64,7 @@ class CurrencyViewController: UIViewController {
         currency?.menu.selectionAction = {index, title in
             self.currency?.valueFirstLabel.text = title
             print ("\(index) \(title)")
+            self.removeFirstFlag(title: title)
         }
         
     }
@@ -68,15 +73,35 @@ class CurrencyViewController: UIViewController {
         currency?.menu2.selectionAction = {index, title in
             self.currency?.valueSecondLabel.text = title
             print ("\(index) \(title)")
+            self.removeSecondFlag(title: title)
         }
         
+    }
+    
+    func removeFirstFlag(title:String) {
+        firstTypeCurrency = title
+        firstTypeCurrency.remove(at: firstTypeCurrency.startIndex)
+        print (firstTypeCurrency)
+    }
+    
+    func removeSecondFlag(title:String) {
+        secondTypeCurrency = title
+        secondTypeCurrency.remove(at: secondTypeCurrency.startIndex)
+        print (secondTypeCurrency)
+    }
+    
+    func makeRequest() {
+        let value = firstTypeCurrency
+        firstTypeCurrency = secondTypeCurrency
+        secondTypeCurrency = value
+        service?.fetchCurrency(firstTypeCurrency, secondTypeCurrency, self.currency?.firstCurrencyTextField.text ?? "")
     }
 
 }
 
 extension CurrencyViewController : CurrencyViewProtocol {
     func tappedCaculateButtonAction() {
-        
+        service?.fetchCurrency(firstTypeCurrency, secondTypeCurrency, self.currency?.firstCurrencyTextField.text ?? "")
     }
     
    
@@ -84,7 +109,24 @@ extension CurrencyViewController : CurrencyViewProtocol {
         let value:String = currency?.valueFirstLabel.text ?? ""
         self.currency?.valueFirstLabel.text = self.currency?.valueSecondLabel.text
         self.currency?.valueSecondLabel.text = value
-        self.viewModel.getCurrencyResquest()
+        self.makeRequest()
     }
 }
 
+extension CurrencyViewController: CurrencyManagerDelegate {
+    func didUpdateCurrency(currency: Currency) {
+        DispatchQueue.main.async {
+            self.currency?.labelResult.text = String(format: "%.2f", currency.result)
+        }
+    }
+    
+    func didFailWithError(error: Error) {
+        DispatchQueue.main.async {
+            print(error)
+        }
+    }
+    
+    
+    
+    
+}
