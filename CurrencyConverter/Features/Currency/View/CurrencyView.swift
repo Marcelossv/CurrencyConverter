@@ -37,6 +37,7 @@ class CurrencyView: UIView {
         firstView.addSubview(valueFirstLabel)
         firstView.translatesAutoresizingMaskIntoConstraints = false
         firstView.backgroundColor = .white
+        firstView.layer.cornerRadius = 8
         return firstView
     }()
     
@@ -46,7 +47,8 @@ class CurrencyView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 20)
-        label.text = "Currency Convert"
+        label.text = "▽"
+        
         label.numberOfLines = 0
         return label
     }()
@@ -57,6 +59,7 @@ class CurrencyView: UIView {
         menu.dataSource = [
             "🇦🇺AUD", "🇧🇷BRL", "🇨🇦CAD", "🇪🇺EUR", "🇬🇧GBP", "🇯🇵JPY", "🇺🇸USD"
         ]
+    
         return menu
     }()
 
@@ -74,6 +77,7 @@ class CurrencyView: UIView {
         secondView.addSubview(valueSecondLabel)
         secondView.translatesAutoresizingMaskIntoConstraints = false
         secondView.backgroundColor = .white
+        secondView.layer.cornerRadius = 8
         return secondView
     }()
     
@@ -83,7 +87,7 @@ class CurrencyView: UIView {
         textField.autocorrectionType = .no
         textField.backgroundColor = .white
         textField.borderStyle = .roundedRect
-        textField.layer.cornerRadius = 7
+        textField.layer.cornerRadius = 8
         textField.layer.borderColor = CGColor(red: 55/255, green: 67/255, blue: 91/255, alpha: 1.0)
         textField.layer.borderWidth = 1.0
         textField.keyboardType = .default
@@ -100,7 +104,8 @@ class CurrencyView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 20)
-        label.text = "Currency Convert"
+        label.text = "▽"
+        label.textAlignment = .natural
         label.numberOfLines = 0
         return label
     }()
@@ -120,7 +125,7 @@ class CurrencyView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 25)
-        label.text = "test"
+        label.text = ""
         label.numberOfLines = 0
         return label
     }()
@@ -141,6 +146,7 @@ class CurrencyView: UIView {
         self.addSubView()
         self.setupConstraints()
         self.configBackGround()
+        self.enableButton(false)
     }
     
     required init?(coder: NSCoder) {
@@ -168,6 +174,32 @@ class CurrencyView: UIView {
         self.addSubview(self.labelResult)
         self.addSubview(self.calculateButton)
 }
+    
+    public func configtextFieldDelegateSignUp(delegate: UITextFieldDelegate) {
+        self.firstCurrencyTextField.delegate = delegate
+    }
+    
+    public func validateTextField() {
+            if firstCurrencyTextField.text == ""{
+                firstCurrencyTextField.layer.borderColor = UIColor.red.cgColor
+                self.enableButton(false)
+            } else {
+                firstCurrencyTextField.layer.borderColor = UIColor.lightGray.cgColor
+                    self.enableButton(true)
+            }
+        
+    
+    }
+
+    private func enableButton(_ enable: Bool) {
+        if enable {
+            self.calculateButton.isEnabled = true
+            self.calculateButton.setTitleColor(.white, for: .normal)
+            } else {
+            self.calculateButton.isEnabled = false
+            self.calculateButton.setTitleColor(.lightGray, for: .normal)
+            }
+        }
     
     private func setupConstraints() {
         
@@ -208,7 +240,7 @@ class CurrencyView: UIView {
             self.labelResult.topAnchor.constraint(equalTo: self.secondCurrencyView.bottomAnchor,constant: 20),
             self.labelResult.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
-            self.calculateButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor,constant: -50),
+            self.calculateButton.topAnchor.constraint(equalTo: self.valueSecondLabel.bottomAnchor,constant: 90),
             self.calculateButton.leadingAnchor.constraint(equalTo: self.firstCurrencyView.leadingAnchor),
             self.calculateButton.trailingAnchor.constraint(equalTo: self.firstCurrencyView.trailingAnchor),
             self.calculateButton.heightAnchor.constraint(equalToConstant: 40),
