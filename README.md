@@ -1,12 +1,14 @@
 # CurrencyConverter
 
 
-Full flow login screen with validations
+Real time currency converter
 
 ## Used Technologies:
   🔹View Code
   🔹Api Rest
   🔹Cocoapods
+  🔹Protocol
+  🔹Delegate
   
   ## Configration
 
